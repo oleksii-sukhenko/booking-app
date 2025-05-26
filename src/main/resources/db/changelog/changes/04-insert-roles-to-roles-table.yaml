@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: oleksiisukhenko
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column: {name: role, value: ROLE_MANAGER}
+        - insert:
+            tableName: roles
+            columns:
+              - column: {name: role, value: ROLE_CUSTOMER}
