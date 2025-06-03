@@ -27,10 +27,10 @@ public class AuthenticationController {
     @PostMapping("/registration")
     @Operation(summary = "Register user", description = "Register a new user")
     public UserRegisterResponseDto register(
-            @RequestBody @Valid UserRegisterRequestDto request
+            @RequestBody @Valid UserRegisterRequestDto requestDto
     )
             throws RegisterException {
-        return userService.register(request);
+        return userService.register(requestDto);
     }
 
     @PostMapping("/login")

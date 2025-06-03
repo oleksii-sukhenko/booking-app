@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: oleksiisukhenko
+      changes:
+        - createTable:
+            tableName: addresses
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: country
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: street
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: postcode
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: bit
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: insert-addresses
+      author: oleksiisukhenko
+      changes:
+        - insert:
+            tableName: addresses
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: country
+                  value: "Ukraine"
+              - column:
+                  name: city
+                  value: "Kyiv"
+              - column:
+                  name: street
+                  value: "Mykoly Vasylenka"
+              - column:
+                  name: number
+                  value: "7a"
+              - column:
+                  name: postcode
+                  value: "03124"

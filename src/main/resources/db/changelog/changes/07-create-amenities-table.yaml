@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: oleksiisukhenko
+      changes:
+        - createTable:
+            tableName: amenities
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: insert-amenities
+      author: oleksiisukhenko
+      changes:
+        - insert:
+            tableName: amenities
+            columns:
+              - column: { name: name, value: "Free parking" }
+        - insert:
+            tableName: amenities
+            columns:
+              - column: { name: name, value: "Pet-friendly" }
