@@ -4,10 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import mate.academy.booking.dto.user.UserDataResponseDto;
 import mate.academy.booking.dto.user.UserLoginRequestDto;
 import mate.academy.booking.dto.user.UserLoginResponseDto;
 import mate.academy.booking.dto.user.UserRegisterRequestDto;
-import mate.academy.booking.dto.user.UserRegisterResponseDto;
 import mate.academy.booking.exception.RegisterException;
 import mate.academy.booking.security.AuthenticationService;
 import mate.academy.booking.service.user.UserService;
@@ -26,7 +26,7 @@ public class AuthenticationController {
 
     @PostMapping("/registration")
     @Operation(summary = "Register user", description = "Register a new user")
-    public UserRegisterResponseDto register(
+    public UserDataResponseDto register(
             @RequestBody @Valid UserRegisterRequestDto requestDto
     )
             throws RegisterException {

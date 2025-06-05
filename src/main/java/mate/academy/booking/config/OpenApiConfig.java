@@ -15,7 +15,6 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenApi() {
-        System.out.println(">>> OpenAPI bean created");
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes(SECURITY_SCHEME_NAME,
                         new SecurityScheme()

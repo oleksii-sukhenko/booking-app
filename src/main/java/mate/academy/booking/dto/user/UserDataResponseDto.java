@@ -1,6 +1,6 @@
 package mate.academy.booking.dto.user;
 
-public record UserRegisterResponseDto(
+public record UserDataResponseDto(
         Long id,
         String email,
         String firstName,
