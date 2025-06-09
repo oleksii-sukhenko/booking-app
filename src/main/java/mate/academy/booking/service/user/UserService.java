@@ -8,6 +8,7 @@ import mate.academy.booking.dto.user.UserDataResponseDto;
 import mate.academy.booking.dto.user.UserRegisterRequestDto;
 import mate.academy.booking.dto.user.UserRoleResponseDto;
 import mate.academy.booking.exception.RegisterException;
+import mate.academy.booking.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,4 +25,6 @@ public interface UserService {
     UserRoleResponseDto updateRole(Long userId, UpdateUserRoleRequestDto requestDto);
 
     Page<UserRoleResponseDto> getAllUsers(Pageable pageable);
+
+    User getCurrentUser();
 }

@@ -119,7 +119,8 @@ public class UserServiceImpl implements UserService {
                 .map(userRoleMapper::toDto);
     }
 
-    private User getCurrentUser() {
+    @Override
+    public User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
