@@ -27,4 +27,5 @@ public interface UserService {
     Page<UserRoleResponseDto> getAllUsers(Pageable pageable);
 
     User getCurrentUser();
+
 }

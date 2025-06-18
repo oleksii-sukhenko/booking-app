@@ -19,6 +19,7 @@ import mate.academy.booking.model.Role;
 import mate.academy.booking.model.User;
 import mate.academy.booking.repository.user.UserRepository;
 import mate.academy.booking.repository.user.role.RoleRepository;
+import mate.academy.booking.security.AuthenticationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final UserRoleMapper userRoleMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final AuthenticationService authenticationService;
 
     @Override
     public UserDataResponseDto register(UserRegisterRequestDto requestDto)

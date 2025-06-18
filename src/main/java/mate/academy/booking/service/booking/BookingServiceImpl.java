@@ -16,6 +16,7 @@ import mate.academy.booking.model.Booking.Status;
 import mate.academy.booking.model.User;
 import mate.academy.booking.repository.accommodation.AccommodationRepository;
 import mate.academy.booking.repository.booking.BookingRepository;
+import mate.academy.booking.service.notification.TelegramNotificationService;
 import mate.academy.booking.service.user.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ public class BookingServiceImpl implements BookingService {
     private final AccommodationRepository accommodationRepository;
     private final BookingMapper bookingMapper;
     private final UserService userService;
+    private final TelegramNotificationService notificationService;
 
     @Override
     public BookingResponseDto create(BookingRequestDto requestDto, User user) {
@@ -40,6 +42,10 @@ public class BookingServiceImpl implements BookingService {
         booking.setUser(user);
         booking.setAccommodation(accommodation);
         booking.setStatus(Status.PENDING);
+        notificationService.notifyAdmin(
+                "New booking from " + user.getEmail()
+                        + ", accommodation ID: " + accommodation.getId()
+        );
 
         return bookingMapper.toDto(bookingRepository.save(booking));
     }
@@ -82,7 +88,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
 
         Accommodation accommodation = accommodationRepository.findById(
-                requestDto.getAccommodationId()
+                        requestDto.getAccommodationId()
                 )
                 .orElseThrow(() -> new EntityNotFoundException("Accommodation not found"));
 
@@ -110,6 +116,7 @@ public class BookingServiceImpl implements BookingService {
                 Status.PENDING,
                 Status.CONFIRMED
         );
+
         List<Booking> bookingsToExpire = bookingRepository
                 .findByCheckOutDateAndStatuses(today, activeStatuses);
 
