@@ -30,6 +30,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PaymentServiceImpl implements PaymentService {
     private static final int THRESHOLD = 30;
+    private static final String PAYMENT_SUCCESS
+            = "Booking ID %s has been paid";
+    private static final String PAYMENT_CANCEL
+            = "Booking ID %s payment has been canceled";
 
     private final BookingRepository bookingRepository;
     private final PaymentRepository paymentRepository;
@@ -102,7 +106,7 @@ public class PaymentServiceImpl implements PaymentService {
         Booking booking = payment.getBooking();
 
         notificationService.notifyAdmin(
-                "Booking id " + booking.getId() + " is paid"
+                String.format(PAYMENT_SUCCESS, booking.getId())
         );
 
         return "Payment successful";
@@ -121,7 +125,7 @@ public class PaymentServiceImpl implements PaymentService {
         Booking booking = payment.getBooking();
 
         notificationService.notifyAdmin(
-                "Booking id " + booking.getId() + " payment is canceled"
+                String.format(PAYMENT_CANCEL, booking.getId())
         );
 
         return "Payment was cancelled or paused.";
