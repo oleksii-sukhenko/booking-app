@@ -36,4 +36,17 @@ public interface BookingRepository extends JpaRepository<Booking, Long>,
             @Param("checkOutDate") LocalDate checkOutDate,
             @Param("statuses") List<Booking.Status> statuses
     );
+
+    @Query("""
+                SELECT COUNT(b) FROM Booking b
+                WHERE b.accommodation.id = :accommodationId
+                AND b.status IN ('PENDING', 'CONFIRMED')
+                AND b.checkOutDate > :checkInDate
+                AND b.checkInDate < :checkOutDate
+            """)
+    long countOverlappingBookings(
+            @Param("accommodationId") Long accommodationId,
+            @Param("checkInDate") LocalDate checkInDate,
+            @Param("checkOutDate") LocalDate checkOutDate
+    );
 }

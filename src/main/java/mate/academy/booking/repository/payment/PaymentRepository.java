@@ -13,4 +13,8 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     Optional<Payment> findBySessionId(String sessionId);
 
     List<Payment> findAllByStatusAndCreatedAtBefore(Status status, LocalDateTime time);
+
+    Optional<Payment> findFirstByBookingIdAndStatusOrderByCreatedAtDesc(
+            Long bookingId, Status status
+    );
 }

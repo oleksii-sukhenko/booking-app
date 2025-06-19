@@ -34,20 +34,37 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponseDto create(BookingRequestDto requestDto, User user) {
-        Accommodation accommodation
-                = accommodationRepository.findById(requestDto.getAccommodationId())
+        Accommodation accommodation = accommodationRepository
+                .findById(requestDto.getAccommodationId())
                 .orElseThrow(() -> new EntityNotFoundException("Accommodation not found"));
+
+        long overlapping = bookingRepository.countOverlappingBookings(
+                accommodation.getId(),
+                requestDto.getCheckInDate(),
+                requestDto.getCheckOutDate()
+        );
+
+        if (overlapping >= accommodation.getAvailability()) {
+            throw new IllegalStateException("There is no available accommodation for this period");
+        }
 
         Booking booking = bookingMapper.toModel(requestDto);
         booking.setUser(user);
         booking.setAccommodation(accommodation);
         booking.setStatus(Status.PENDING);
+
+        booking = bookingRepository.save(booking);
+
         notificationService.notifyAdmin(
                 "New booking from " + user.getEmail()
-                        + ", accommodation ID: " + accommodation.getId()
+                        + ", \naccommodation ID: " + accommodation.getId()
+                        + ", \ntype: " + accommodation.getType()
+                        + ", \ncheck in: " + booking.getCheckInDate()
+                        + ", \ncheck out: " + booking.getCheckOutDate()
+                        + ", \nbooking id: " + booking.getId()
         );
 
-        return bookingMapper.toDto(bookingRepository.save(booking));
+        return bookingMapper.toDto(booking);
     }
 
     @Override

@@ -2,8 +2,6 @@ package mate.academy.booking.service.payment;
 
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.stripe.model.checkout.Session;
 import mate.academy.booking.dto.payment.PaymentResponseDto;
 import mate.academy.booking.model.Booking;
 import mate.academy.booking.model.Payment;

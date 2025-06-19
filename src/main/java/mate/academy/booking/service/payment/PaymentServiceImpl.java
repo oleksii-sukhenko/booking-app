@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mate.academy.booking.dto.payment.PaymentResponseDto;
@@ -18,6 +19,7 @@ import mate.academy.booking.model.Payment.Status;
 import mate.academy.booking.model.User;
 import mate.academy.booking.repository.booking.BookingRepository;
 import mate.academy.booking.repository.payment.PaymentRepository;
+import mate.academy.booking.service.notification.TelegramNotificationService;
 import mate.academy.booking.service.stripe.StripeService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.AccessDeniedException;
@@ -33,6 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final StripeService stripeService;
     private final PaymentMapper paymentMapper;
+    private final TelegramNotificationService notificationService;
 
     @Override
     public List<PaymentResponseDto> getPaymentSession(Long userId) {
@@ -50,8 +53,16 @@ public class PaymentServiceImpl implements PaymentService {
             throw new AccessDeniedException("You are not allowed to pay for this booking");
         }
 
-        BigDecimal amountToPay = calculateAmountToPay(booking);
+        Optional<Payment> existing = paymentRepository
+                .findFirstByBookingIdAndStatusOrderByCreatedAtDesc(
+                bookingId, Status.PENDING
+        );
 
+        if (existing.isPresent()) {
+            return paymentMapper.toDto(existing.get());
+        }
+
+        BigDecimal amountToPay = calculateAmountToPay(booking);
         Payment payment = createPaymentWithSession(booking, amountToPay);
 
         return paymentMapper.toDto(payment);
@@ -87,6 +98,13 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setStatus(Status.PAID);
             paymentRepository.save(payment);
         }
+
+        Booking booking = payment.getBooking();
+
+        notificationService.notifyAdmin(
+                "Booking id " + booking.getId() + " is paid"
+        );
+
         return "Payment successful";
     }
 
@@ -99,6 +117,12 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setStatus(Status.CANCELED);
             paymentRepository.save(payment);
         }
+
+        Booking booking = payment.getBooking();
+
+        notificationService.notifyAdmin(
+                "Booking id " + booking.getId() + " payment is canceled"
+        );
 
         return "Payment was cancelled or paused.";
     }
