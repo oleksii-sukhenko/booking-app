@@ -7,9 +7,11 @@ import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class CreateAddressRequestDto {
     @NotBlank
     private String country;
@@ -21,7 +23,5 @@ public class CreateAddressRequestDto {
     private String number;
     @NotBlank
     private String postCode;
-    @NotNull
-    @Size(min = 1)
     private List<@NotNull @Positive Long> accommodationIds;
 }

@@ -1,0 +1,13 @@
+spring.datasource.url=jdbc:tc:mysql:8.0.33:///
+spring.datasource.driverClassName=org.testcontainers.jdbc.ContainerDatabaseDriver
+spring.datasource.username=test
+spring.datasource.password=test
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+
+spring.liquibase.enabled=false
+
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true
+
+jwt.expiration=86400000
+jwt.secret=superdupersecretsuperdupersecretsuperdupersecret

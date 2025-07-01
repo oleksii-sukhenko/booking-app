@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import mate.academy.booking.validate.FieldMatch;
 
 @Getter
@@ -14,6 +15,7 @@ import mate.academy.booking.validate.FieldMatch;
         second = "repeatPassword",
         message = "The password fields must match."
 )
+@Accessors(chain = true)
 public class UserRegisterRequestDto {
     @NotBlank
     @Email

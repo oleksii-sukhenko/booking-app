@@ -19,7 +19,6 @@ import mate.academy.booking.model.Role;
 import mate.academy.booking.model.User;
 import mate.academy.booking.repository.user.UserRepository;
 import mate.academy.booking.repository.user.role.RoleRepository;
-import mate.academy.booking.security.AuthenticationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,7 +35,6 @@ public class UserServiceImpl implements UserService {
     private final UserRoleMapper userRoleMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final AuthenticationService authenticationService;
 
     @Override
     public UserDataResponseDto register(UserRegisterRequestDto requestDto)
@@ -45,7 +43,7 @@ public class UserServiceImpl implements UserService {
             throw new RegisterException("This email is already taken");
         }
         User user = userMapper.toModel(requestDto);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         Role role = roleRepository.findByRole(Role.RoleName.ROLE_CUSTOMER);
         user.setRoles(Set.of(role));
         userRepository.save(user);
@@ -106,12 +104,13 @@ public class UserServiceImpl implements UserService {
         Role newRole = roleRepository.findById(requestDto.getRoleId())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
 
+        user.setRoles(new HashSet<>(List.of(newRole)));
+        userRepository.save(user);
+
         List<Long> roleIds = user.getRoles().stream()
                 .map(Role::getId)
                 .toList();
 
-        user.setRoles(new HashSet<>(List.of(newRole)));
-        userRepository.save(user);
         return new UserRoleResponseDto(user.getId(), user.getEmail(), roleIds);
     }
 

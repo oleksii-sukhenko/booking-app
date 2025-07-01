@@ -85,7 +85,10 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Override
     public void deleteById(Long id) {
-        accommodationRepository.deleteById(id);
+        Accommodation accommodation = accommodationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Accommodation not found"));
+        accommodation.setDeleted(true);
+        accommodationRepository.save(accommodation);
     }
 
     private void setAddressAndAmenities(

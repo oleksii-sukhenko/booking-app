@@ -68,19 +68,20 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Page<BookingResponseDto> findByUserIdAndStatus(
-            Pageable pageable, BookingSearchParameters searchParameters
-    ) {
+    public Page<BookingResponseDto> findByUserIdAndStatus(Pageable pageable, BookingSearchParameters searchParameters) {
         List<Long> userIds = searchParameters.userId() != null
                 ? Arrays.asList(searchParameters.userId())
                 : null;
 
-        List<Status> statuses = searchParameters.status() != null
-                ? Arrays.stream(searchParameters.status())
-                .map(String::toUpperCase)
-                .map(Status::valueOf)
-                .toList()
-                : null;
+        List<Status> statuses = null;
+        if (searchParameters.status() != null) {
+            statuses = Arrays.stream(searchParameters.status())
+                    .flatMap(s -> Arrays.stream(s.split(",")))
+                    .map(String::trim)
+                    .map(String::toUpperCase)
+                    .map(Status::valueOf)
+                    .toList();
+        }
 
         return bookingRepository.searchByUserIdsAndStatuses(userIds, statuses, pageable)
                 .map(bookingMapper::toDto);

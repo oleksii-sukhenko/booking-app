@@ -9,10 +9,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import mate.academy.booking.model.Accommodation;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class CreateAccommodationRequestDto {
     @NotNull
     private Accommodation.Type type;

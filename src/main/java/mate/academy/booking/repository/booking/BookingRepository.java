@@ -12,8 +12,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface BookingRepository extends JpaRepository<Booking, Long>,
         JpaSpecificationExecutor<Booking> {
-    List<Booking> findAllByUserId(Long userId);
-
     Page<Booking> findAllByUserId(Long userId, Pageable pageable);
 
     @Query("""
