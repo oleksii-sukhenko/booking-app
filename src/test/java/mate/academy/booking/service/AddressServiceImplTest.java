@@ -7,9 +7,9 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import jakarta.persistence.EntityNotFoundException;
 import mate.academy.booking.dto.accommodation.AddressResponseDto;
 import mate.academy.booking.dto.accommodation.CreateAddressRequestDto;
 import mate.academy.booking.mapper.AddressMapper;
@@ -32,9 +32,9 @@ public class AddressServiceImplTest {
     @Mock
     private AddressRepository addressRepository;
     @Mock
-    AddressMapper addressMapper;
+    private AddressMapper addressMapper;
     @InjectMocks
-    AddressServiceImpl addressService;
+    private AddressServiceImpl addressService;
 
     private CreateAddressRequestDto requestDto;
     private Address address;

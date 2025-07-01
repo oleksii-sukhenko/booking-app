@@ -8,11 +8,11 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import jakarta.persistence.EntityNotFoundException;
 import mate.academy.booking.dto.accommodation.AccommodationResponseDto;
 import mate.academy.booking.dto.accommodation.AddressResponseDto;
 import mate.academy.booking.dto.accommodation.AmenityResponseDto;
@@ -41,7 +41,7 @@ public class AccommodationServiceImplTest {
     @Mock
     private AccommodationMapper accommodationMapper;
     @Mock
-    AmenityRepository amenityRepository;
+    private AmenityRepository amenityRepository;
     @InjectMocks
     private AccommodationServiceImpl accommodationService;
 
@@ -126,11 +126,17 @@ public class AccommodationServiceImplTest {
         Accommodation savedAccommodation = new Accommodation().setId(2L);
 
         when(addressRepository.findById(1L)).thenReturn(Optional.of(address));
-        when(amenityRepository.findById(1L)).thenReturn(Optional.of(new Amenity().setId(1L).setName("WiFi")));
-        when(amenityRepository.findById(2L)).thenReturn(Optional.of(new Amenity().setId(2L).setName("TV")));
+        when(amenityRepository.findById(1L)).thenReturn(Optional.of(
+                new Amenity().setId(1L).setName("WiFi")
+        ));
+        when(amenityRepository.findById(2L)).thenReturn(Optional.of(
+                new Amenity().setId(2L).setName("TV")
+        ));
         when(accommodationMapper.toModel(requestDto)).thenReturn(savedAccommodation);
-        when(accommodationRepository.save(any(Accommodation.class))).thenReturn(savedAccommodation);
-        when(accommodationMapper.toDto(any(Accommodation.class))).thenReturn(accommodationResponseDto);
+        when(accommodationRepository.save(any(Accommodation.class)))
+                .thenReturn(savedAccommodation);
+        when(accommodationMapper.toDto(any(Accommodation.class)))
+                .thenReturn(accommodationResponseDto);
 
         AccommodationResponseDto actual = accommodationService.save(requestDto);
 

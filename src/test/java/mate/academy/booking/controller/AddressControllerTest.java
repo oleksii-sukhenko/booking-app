@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
 import mate.academy.booking.dto.accommodation.AddressResponseDto;
 import mate.academy.booking.dto.accommodation.CreateAddressRequestDto;
 import mate.academy.booking.util.TestUtil;
@@ -38,7 +38,7 @@ public class AddressControllerTest {
     protected static MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @BeforeAll
     void setUp(
@@ -65,14 +65,13 @@ public class AddressControllerTest {
         CreateAddressRequestDto requestDto = TestUtil.createAddressRequestDto();
         AddressResponseDto expected = TestUtil.getNewAddressDto();
 
-
         MvcResult result = mockMvc.perform(post("/location")
                         .content(objectMapper.writeValueAsString(requestDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
-       AddressResponseDto actual = objectMapper.readValue(
+        AddressResponseDto actual = objectMapper.readValue(
                 result.getResponse().getContentAsString(),
                 AddressResponseDto.class);
 

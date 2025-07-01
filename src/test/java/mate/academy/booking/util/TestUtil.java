@@ -3,8 +3,13 @@ package mate.academy.booking.util;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-
-import mate.academy.booking.dto.accommodation.*;
+import mate.academy.booking.dto.accommodation.AccommodationResponseDto;
+import mate.academy.booking.dto.accommodation.AccommodationResponseDtoWithoutAddressDto;
+import mate.academy.booking.dto.accommodation.AddressResponseDto;
+import mate.academy.booking.dto.accommodation.AmenityResponseDto;
+import mate.academy.booking.dto.accommodation.CreateAccommodationRequestDto;
+import mate.academy.booking.dto.accommodation.CreateAddressRequestDto;
+import mate.academy.booking.dto.accommodation.CreateAmenityRequestDto;
 import mate.academy.booking.dto.booking.BookingResponseDto;
 import mate.academy.booking.dto.user.UserDataResponseDto;
 import mate.academy.booking.model.Accommodation;
@@ -120,8 +125,9 @@ public class TestUtil {
         );
     }
 
-    public static Page<AccommodationResponseDtoWithoutAddressDto> getAccommodationResponseDtoWithoutAddressDto(
-            Long addressId
+    public static Page<AccommodationResponseDtoWithoutAddressDto>
+            getAccommodationResponseDtoWithoutAddressDto(
+                Long addressId
     ) {
         List<AccommodationResponseDto> fullDtos = getAccommodationDtos().getContent();
 

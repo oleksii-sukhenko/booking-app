@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
 import mate.academy.booking.dto.accommodation.AmenityResponseDto;
 import mate.academy.booking.dto.accommodation.CreateAmenityRequestDto;
 import mate.academy.booking.util.TestUtil;
@@ -38,7 +38,7 @@ public class AmenityControllerTest {
     protected static MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @BeforeAll
     void setUp(
@@ -121,8 +121,8 @@ public class AmenityControllerTest {
 
         AmenityResponseDto actual = objectMapper
                 .readValue(
-                        result.getResponse().getContentAsString()
-                        , AmenityResponseDto.class
+                        result.getResponse().getContentAsString(),
+                        AmenityResponseDto.class
                 );
         assertEquals(expected, actual);
     }

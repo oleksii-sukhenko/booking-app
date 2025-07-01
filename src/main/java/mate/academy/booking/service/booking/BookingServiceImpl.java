@@ -68,7 +68,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Page<BookingResponseDto> findByUserIdAndStatus(Pageable pageable, BookingSearchParameters searchParameters) {
+    public Page<BookingResponseDto> findByUserIdAndStatus(
+            Pageable pageable, BookingSearchParameters searchParameters
+    ) {
         List<Long> userIds = searchParameters.userId() != null
                 ? Arrays.asList(searchParameters.userId())
                 : null;

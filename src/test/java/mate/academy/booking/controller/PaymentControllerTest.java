@@ -11,20 +11,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import mate.academy.booking.dto.booking.BookingRequestDto;
+import javax.sql.DataSource;
 import mate.academy.booking.dto.booking.BookingResponseDto;
 import mate.academy.booking.dto.payment.PaymentResponseDto;
-import mate.academy.booking.model.Booking;
 import mate.academy.booking.model.Payment;
 import mate.academy.booking.util.TestUtil;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,10 +29,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -49,7 +42,7 @@ public class PaymentControllerTest {
     protected static MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @BeforeAll
     void setUp(
@@ -140,11 +133,11 @@ public class PaymentControllerTest {
                 .allSatisfy(payment ->
                         assertTrue(
                                 bookingIdsOfUser.contains(payment.bookingId()),
-                                "Payment with bookingId " + payment.bookingId() + " does not belong to user " + userId
+                                "Payment with bookingId " + payment.bookingId()
+                                        + " does not belong to user " + userId
                         )
                 );
     }
-
 
     @Test
     @WithMockUser(username = "user@mail.com", roles = {"CUSTOMER"})

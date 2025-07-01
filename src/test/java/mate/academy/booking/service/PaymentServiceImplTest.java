@@ -9,14 +9,14 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
+import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import com.stripe.exception.StripeException;
-import com.stripe.model.checkout.Session;
-import jakarta.persistence.EntityNotFoundException;
 import mate.academy.booking.dto.payment.PaymentResponseDto;
 import mate.academy.booking.mapper.PaymentMapper;
 import mate.academy.booking.model.Accommodation;
@@ -135,7 +135,8 @@ public class PaymentServiceImplTest {
 
     @Test
     void handleSuccess_ValidSession_UpdatesStatusAndSendNotification() {
-        when(paymentRepository.findBySessionId(payment.getSessionId())).thenReturn(Optional.of(payment));
+        when(paymentRepository.findBySessionId(payment.getSessionId()))
+                .thenReturn(Optional.of(payment));
 
         String result = paymentService.handleSuccess(payment.getSessionId());
 
@@ -147,7 +148,8 @@ public class PaymentServiceImplTest {
 
     @Test
     void handleCancel_ValidSession_UpdatesStatusAndSendNotification() {
-        when(paymentRepository.findBySessionId(payment.getSessionId())).thenReturn(Optional.of(payment));
+        when(paymentRepository.findBySessionId(payment.getSessionId()))
+                .thenReturn(Optional.of(payment));
 
         String result = paymentService.handleCancel(payment.getSessionId());
 

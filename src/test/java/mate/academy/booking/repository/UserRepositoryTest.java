@@ -19,7 +19,6 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-
     @Test
     void existsByEmail_ExistingEmail_ShouldReturnTrue() {
         boolean exists = userRepository.existsByEmail("user@mail.com");

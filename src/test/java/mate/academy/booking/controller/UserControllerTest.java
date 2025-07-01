@@ -40,7 +40,7 @@ public class UserControllerTest {
     protected static MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @BeforeAll
     void setUp(

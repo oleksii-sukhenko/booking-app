@@ -12,11 +12,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.sql.DataSource;
 import mate.academy.booking.dto.accommodation.AccommodationResponseDto;
 import mate.academy.booking.dto.accommodation.AccommodationResponseDtoWithoutAddressDto;
 import mate.academy.booking.dto.accommodation.AmenityResponseDto;
@@ -45,7 +45,7 @@ public class AccommodationControllerTest {
     protected static MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @BeforeAll
     void setUp(

@@ -45,7 +45,8 @@ public class PaymentRepositoryTest {
 
     @Test
     void findFirstByBookingIdAndStatusOrderByCreatedAtDesc_ShouldReturnLatestPayment() {
-        Optional<Payment> result = paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc(
+        Optional<Payment> result = paymentRepository
+                .findFirstByBookingIdAndStatusOrderByCreatedAtDesc(
                 1L, Payment.Status.PAID
         );
         assertThat(result).isPresent();

@@ -50,7 +50,7 @@ public class UserServiceImplTest {
     @Mock
     private RoleRepository roleRepository;
     @InjectMocks
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     private User user;
     private Role role;

@@ -11,10 +11,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import jakarta.persistence.EntityNotFoundException;
 import mate.academy.booking.dto.booking.BookingRequestDto;
 import mate.academy.booking.dto.booking.BookingResponseDto;
 import mate.academy.booking.dto.booking.BookingSearchParameters;
@@ -115,14 +115,10 @@ public class BookingServiceImplTest {
 
     @Test
     void findByUserIdAndStatus_WithParams_ReturnsPageOfDtos() {
-        String[] statuses = {"PENDING", "CONFIRMED"};
-        BookingSearchParameters params
-                = new BookingSearchParameters(new Long[]{user.getId()}, statuses);
-        Pageable pageable = PageRequest.of(0, 5);
-
         Booking booking1 = new Booking();
         booking1.setId(1L);
         booking1.setStatus(Status.PENDING);
+
         Booking booking2 = new Booking();
         booking2.setId(2L);
         booking2.setStatus(Status.CONFIRMED);
@@ -137,6 +133,12 @@ public class BookingServiceImplTest {
         );
 
         Page<Booking> mockPage = new PageImpl<>(List.of(booking1, booking2));
+        final Pageable pageable = PageRequest.of(0, 5);
+        final BookingSearchParameters params =
+                new BookingSearchParameters(
+                        new Long[]{user.getId()},
+                        new String[]{"PENDING", "CONFIRMED"}
+                );
 
         when(
                 bookingRepository.searchByUserIdsAndStatuses(
@@ -148,8 +150,8 @@ public class BookingServiceImplTest {
         when(bookingMapper.toDto(booking1)).thenReturn(dto1);
         when(bookingMapper.toDto(booking2)).thenReturn(dto2);
 
-        Page<BookingResponseDto> result
-                = bookingService.findByUserIdAndStatus(pageable, params);
+        Page<BookingResponseDto> result =
+                bookingService.findByUserIdAndStatus(pageable, params);
 
         assertEquals(2, result.getTotalElements());
         assertEquals(Status.PENDING, result.getContent().getFirst().status());
@@ -209,11 +211,13 @@ public class BookingServiceImplTest {
         );
 
         when(bookingRepository.findById(booking.getId())).thenReturn(Optional.of(booking));
-        when(accommodationRepository.findById(accommodation.getId())).thenReturn(Optional.of(accommodation));
+        when(accommodationRepository.findById(accommodation.getId()))
+                .thenReturn(Optional.of(accommodation));
         when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
         when(bookingMapper.toDto(booking)).thenReturn(expected);
 
-        BookingResponseDto actual = bookingService.updateBookingDetails(booking.getId(), requestDto);
+        BookingResponseDto actual = bookingService
+                .updateBookingDetails(booking.getId(), requestDto);
 
         assertNotNull(actual);
         assertEquals(expected, actual);
