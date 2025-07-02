@@ -193,6 +193,8 @@ public class AccommodationControllerTest {
     @Test
     @WithMockUser
     @DisplayName("Get accommodations by amenity IDs")
+    @Sql(scripts = "classpath:database/data.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void findAvailableByAmenityIds_ValidIds_ShouldReturnAccommodationsWithAmenities()
             throws Exception {
         List<Long> amenityIds = List.of(1L);

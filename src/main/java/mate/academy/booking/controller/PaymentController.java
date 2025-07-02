@@ -29,11 +29,13 @@ public class PaymentController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<PaymentResponseDto> createPayment(@RequestParam Long bookingId) {
         User user = userService.getCurrentUser();
-        return ResponseEntity.ok(paymentService.createPaymentSession(bookingId, user));
+        PaymentResponseDto payment = paymentService.createPaymentSession(bookingId, user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(payment);
     }
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public List<PaymentResponseDto> getUserPaymentSession(@RequestParam Long userId) {
         return paymentService.getPaymentSession(userId);
     }

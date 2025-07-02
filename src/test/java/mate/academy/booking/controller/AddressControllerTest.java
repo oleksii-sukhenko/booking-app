@@ -27,6 +27,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -84,6 +85,8 @@ public class AddressControllerTest {
     @Test
     @WithMockUser
     @DisplayName("Get all locations")
+    @Sql(scripts = "classpath:database/data.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void getAllAddresses_GivenAmenities_ShouldReturnAmenities() throws Exception {
         List<AddressResponseDto> expected = TestUtil.getAddressDtos().toList();
 

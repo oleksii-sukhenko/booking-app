@@ -159,6 +159,8 @@ public class BookingControllerTest {
     @Test
     @WithMockUser(username = "user@mail.com", roles = {"CUSTOMER"})
     @DisplayName("Get bookings for authenticated user")
+    @Sql(scripts = "classpath:database/data.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void findForAuthenticatedUser_ReturnsOwnBookings() throws Exception {
         List<BookingResponseDto> expected = TestUtil.getBookingsForUser(1L).toList();
 
