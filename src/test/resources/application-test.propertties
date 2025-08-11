@@ -1,0 +1,15 @@
+spring.datasource.url=jdbc:tc:postgresql:15.3:///
+spring.datasource.driverClassName=org.testcontainers.jdbc.ContainerDatabaseDriver
+spring.datasource.username=test
+spring.datasource.password=test
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.liquibase.enabled=false
+
+spring.sql.init.mode=always
+spring.sql.init.data-locations=classpath:data.sql
+
+jwt.expiration=86400000
+jwt.secret=superdupersecretsuperdupersecretsuperdupersecret
+

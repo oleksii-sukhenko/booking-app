@@ -15,7 +15,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: status
-                  type: enum('PENDING', 'PAID', 'CANCELED', 'FAILED', 'EXPIRED')
+                  type: varchar(20)
                   constraints:
                     nullable: false
               - column:
