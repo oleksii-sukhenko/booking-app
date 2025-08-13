@@ -66,7 +66,7 @@ public class UserControllerTest {
     void getProfileInfo_AuthenticatedUser_Success() throws Exception {
         UserDataResponseDto expected = TestUtil.getUserProfile();
 
-        MvcResult result = mockMvc.perform(get("/users/me")
+        MvcResult result = mockMvc.perform(get("/user/me")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -87,7 +87,7 @@ public class UserControllerTest {
     @WithMockUser(username = "manager", roles = {"MANAGER"})
     @DisplayName("Get all users - as manager")
     void getAllUsers_AsManager_ReturnsUsers() throws Exception {
-        MvcResult result = mockMvc.perform(get("/users")
+        MvcResult result = mockMvc.perform(get("/user")
                         .param("page", "0")
                         .param("size", "10")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -115,7 +115,7 @@ public class UserControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
-        MvcResult result = mockMvc.perform(put("/users/{id}/role", 1L)
+        MvcResult result = mockMvc.perform(put("/user/{id}/role", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk())

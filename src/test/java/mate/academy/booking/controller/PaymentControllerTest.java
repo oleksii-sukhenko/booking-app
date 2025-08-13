@@ -69,7 +69,7 @@ public class PaymentControllerTest {
     void createPaymentSession_ValidBooking_ReturnsPayment() throws Exception {
         Long bookingId = 1L;
 
-        MvcResult result = mockMvc.perform(post("/payments")
+        MvcResult result = mockMvc.perform(post("/payment")
                         .param("bookingId", bookingId.toString()))
                 .andExpect(status().isCreated())
                 .andReturn();
@@ -92,7 +92,7 @@ public class PaymentControllerTest {
     void createPaymentSession_BookingNotFound_ReturnsNotFound() throws Exception {
         long nonExistentBookingId = 999L;
 
-        mockMvc.perform(post("/payments")
+        mockMvc.perform(post("/payment")
                         .param("bookingId", Long.toString(nonExistentBookingId)))
                 .andExpect(status().isNotFound());
     }
@@ -103,7 +103,7 @@ public class PaymentControllerTest {
     void createPaymentSession_WrongUser_Forbidden() throws Exception {
         long bookingId = 1L;
 
-        mockMvc.perform(post("/payments")
+        mockMvc.perform(post("/payment")
                         .param("bookingId", Long.toString(bookingId)))
                 .andExpect(status().isForbidden());
     }
@@ -118,7 +118,7 @@ public class PaymentControllerTest {
                 .map(BookingResponseDto::id)
                 .collect(Collectors.toSet());
 
-        MvcResult result = mockMvc.perform(get("/payments/my"))
+        MvcResult result = mockMvc.perform(get("/payment/my"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -145,7 +145,7 @@ public class PaymentControllerTest {
     void handleSuccess_ValidSessionId_ReturnsSuccessMessage() throws Exception {
         String sessionId = "session_def456";
 
-        MvcResult result = mockMvc.perform(get("/payments/success")
+        MvcResult result = mockMvc.perform(get("/payment/success")
                         .param("session_id", sessionId))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -160,7 +160,7 @@ public class PaymentControllerTest {
     void handleCancel_ValidSessionId_ReturnsCancelMessage() throws Exception {
         String sessionId = "session_abc123";
 
-        MvcResult result = mockMvc.perform(get("/payments/cancel")
+        MvcResult result = mockMvc.perform(get("/payment/cancel")
                         .param("session_id", sessionId))
                 .andExpect(status().isOk())
                 .andReturn();

@@ -76,7 +76,7 @@ public class BookingControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
-        MvcResult result = mockMvc.perform(post("/bookings")
+        MvcResult result = mockMvc.perform(post("/booking")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isCreated())
@@ -108,7 +108,7 @@ public class BookingControllerTest {
     void findBookingById_ValidId_ReturnsBooking() throws Exception {
         BookingResponseDto expected = TestUtil.getBookingsForUser(1L).getContent().getFirst();
 
-        MvcResult result = mockMvc.perform(get("/bookings/{id}", expected.id()))
+        MvcResult result = mockMvc.perform(get("/booking/{id}", expected.id()))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -132,7 +132,7 @@ public class BookingControllerTest {
                 .filter(b -> b.status() == Booking.Status.CONFIRMED)
                 .toList();
 
-        MvcResult result = mockMvc.perform(get("/bookings")
+        MvcResult result = mockMvc.perform(get("/booking")
                         .param("userId", "1")
                         .param("status", "CONFIRMED")
                         .param("page", "0")
@@ -164,7 +164,7 @@ public class BookingControllerTest {
     void findForAuthenticatedUser_ReturnsOwnBookings() throws Exception {
         List<BookingResponseDto> expected = TestUtil.getBookingsForUser(1L).toList();
 
-        MvcResult result = mockMvc.perform(get("/bookings/my")
+        MvcResult result = mockMvc.perform(get("/booking/my")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
