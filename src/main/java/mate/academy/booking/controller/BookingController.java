@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Booking management", description = "Endpoints for booking managing")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/bookings")
+@RequestMapping("/booking")
 public class BookingController {
     private final BookingService bookingService;
     private final UserService userService;
