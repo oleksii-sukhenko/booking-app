@@ -1,7 +1,7 @@
 services:
   postgresdb:
     platform: linux/amd64
-    image: postgres
+    image: postgres:15
     restart: unless-stopped
     env_file: ./.env
     environment:
@@ -11,20 +11,20 @@ services:
     ports:
       - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -u${POSTGRES_USERNAME} -p${POSTGRES_PASSWORD}" ]
-      interval: 30s
-      timeout: 30s
-      retries: 3
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USERNAME} -d ${POSTGRES_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   app:
     depends_on:
-      - postgresdb
+      postgresdb:
+        condition: service_healthy
     restart: on-failure
-    image: accommodation:1.0
-    build: .
+    image: public.ecr.aws/z7n4i8q5/accommodatonbookingservice-api:v01
     env_file: ./.env
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
-      - $DEBUG_PORT:$DEBUG_PORT
     environment:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url"  : "jdbc:postgresql://postgresdb:${POSTGRES_DOCKER_PORT}/${POSTGRES_DATABASE}",
@@ -32,4 +32,3 @@ services:
         "spring.datasource.password" : "${POSTGRES_PASSWORD}",
         "spring.jpa.database-platform" : "org.hibernate.dialect.PostgreSQLDialect"
       }'
-      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$DEBUG_PORT"
