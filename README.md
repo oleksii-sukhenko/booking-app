@@ -1,4 +1,4 @@
-![logo.png](target/logo.png)
+![logo.png](images/logo.png)
 
 # 🏨 Booking App
 
@@ -105,7 +105,7 @@ booking-app/
 
 ## 🗄️ Database Schema Overview
 
-![img.png](target/scheme.png)
+![img.png](images/scheme.png)
 
 ---
 
