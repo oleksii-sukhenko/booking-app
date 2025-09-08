@@ -39,7 +39,7 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/accommodation/**",
                                 "/location/**",
-                                "/payments/**",
+                                "/payment/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
