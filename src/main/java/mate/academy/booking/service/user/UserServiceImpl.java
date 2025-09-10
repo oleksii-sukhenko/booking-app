@@ -1,6 +1,5 @@
 package mate.academy.booking.service.user;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +11,7 @@ import mate.academy.booking.dto.user.UpdateUserRoleRequestDto;
 import mate.academy.booking.dto.user.UserDataResponseDto;
 import mate.academy.booking.dto.user.UserRegisterRequestDto;
 import mate.academy.booking.dto.user.UserRoleResponseDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.exception.RegisterException;
 import mate.academy.booking.mapper.UserMapper;
 import mate.academy.booking.mapper.UserRoleMapper;

@@ -7,11 +7,11 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.booking.dto.accommodation.AddressResponseDto;
 import mate.academy.booking.dto.accommodation.CreateAddressRequestDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.mapper.AddressMapper;
 import mate.academy.booking.model.Address;
 import mate.academy.booking.repository.accommodation.AddressRepository;
@@ -47,7 +47,7 @@ public class AddressServiceImplTest {
                 .setCity("Kyiv")
                 .setStreet("Khreshcatyk")
                 .setNumber("1")
-                .setPostCode("02000");
+                .setPostcode("02000");
 
         address = new Address()
                 .setId(1L)

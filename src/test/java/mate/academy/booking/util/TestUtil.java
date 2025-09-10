@@ -36,7 +36,7 @@ public class TestUtil {
                 .setCity("Kyiv")
                 .setStreet("Mykoly Vasylenka")
                 .setNumber("12b")
-                .setPostCode("01001");
+                .setPostcode("01001");
     }
 
     public static AddressResponseDto getNewAddressDto() {

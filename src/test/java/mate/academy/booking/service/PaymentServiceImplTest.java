@@ -11,13 +11,13 @@ import static org.mockito.Mockito.when;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
-import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.booking.dto.payment.PaymentResponseDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.mapper.PaymentMapper;
 import mate.academy.booking.model.Accommodation;
 import mate.academy.booking.model.Booking;

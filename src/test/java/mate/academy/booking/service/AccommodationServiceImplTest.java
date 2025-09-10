@@ -8,7 +8,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +16,7 @@ import mate.academy.booking.dto.accommodation.AccommodationResponseDto;
 import mate.academy.booking.dto.accommodation.AddressResponseDto;
 import mate.academy.booking.dto.accommodation.AmenityResponseDto;
 import mate.academy.booking.dto.accommodation.CreateAccommodationRequestDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.mapper.AccommodationMapper;
 import mate.academy.booking.model.Accommodation;
 import mate.academy.booking.model.Address;

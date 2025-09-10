@@ -8,7 +8,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
 import java.util.Set;
 import mate.academy.booking.dto.user.UpdatePasswordRequestDto;
@@ -18,6 +17,7 @@ import mate.academy.booking.dto.user.UpdateUserRoleRequestDto;
 import mate.academy.booking.dto.user.UserDataResponseDto;
 import mate.academy.booking.dto.user.UserRegisterRequestDto;
 import mate.academy.booking.dto.user.UserRoleResponseDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.exception.RegisterException;
 import mate.academy.booking.mapper.UserMapper;
 import mate.academy.booking.model.Role;

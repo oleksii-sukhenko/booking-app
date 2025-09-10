@@ -11,7 +11,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +18,7 @@ import mate.academy.booking.dto.booking.BookingRequestDto;
 import mate.academy.booking.dto.booking.BookingResponseDto;
 import mate.academy.booking.dto.booking.BookingSearchParameters;
 import mate.academy.booking.dto.booking.UpdateBookingRequestDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.mapper.BookingMapper;
 import mate.academy.booking.model.Accommodation;
 import mate.academy.booking.model.Booking;

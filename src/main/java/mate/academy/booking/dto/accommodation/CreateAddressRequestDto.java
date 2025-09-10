@@ -21,6 +21,6 @@ public class CreateAddressRequestDto {
     @NotBlank
     private String number;
     @NotBlank
-    private String postCode;
+    private String postcode;
     private List<@NotNull @Positive Long> accommodationIds;
 }

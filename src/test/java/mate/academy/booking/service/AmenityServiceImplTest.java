@@ -7,11 +7,11 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.booking.dto.accommodation.AmenityResponseDto;
 import mate.academy.booking.dto.accommodation.CreateAmenityRequestDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.mapper.AmenityMapper;
 import mate.academy.booking.model.Amenity;
 import mate.academy.booking.repository.accommodation.AmenityRepository;

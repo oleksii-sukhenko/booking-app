@@ -1,9 +1,5 @@
 package mate.academy.booking.exception;
 
-import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.data.mapping.PropertyReferenceException;
@@ -22,42 +18,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request
-    ) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST);
-        List<String> errors = ex.getBindingResult().getAllErrors().stream()
-                .map(this::getErrorMessage)
-                .toList();
-        body.put("errors", errors);
-        return new ResponseEntity<>(body, headers, HttpStatus.BAD_REQUEST);
-    }
-
-    private String getErrorMessage(ObjectError e) {
-        if (e instanceof FieldError) {
-            String field = ((FieldError) e).getField();
-            String message = e.getDefaultMessage();
-            return field + " " + message;
-        }
-        return e.getDefaultMessage();
-    }
 
     @ExceptionHandler(mate.academy.booking.exception.RegisterException.class)
     public ResponseEntity<Object> handleRegistrationException(RegisterException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(Map.of("error", exception.getMessage()));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntityNotFoundException(
+    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(
             EntityNotFoundException ex
     ) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", ex.getMessage()));
     }
 
     @ExceptionHandler(PropertyReferenceException.class)
@@ -71,9 +46,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     public ResponseEntity<Map<String, String>> handleAccessDeniedException(
             AccessDeniedException ex
     ) {
-        Map<String, String> body = new HashMap<>();
-        body.put("error", "Forbidden - you do not have permission to access this resource");
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(Map.of(
+                        "error",
+                        "Forbidden - you do not have permission to access this resource"
+                ));
     }
 
     @ExceptionHandler(Exception.class)
@@ -81,5 +59,28 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Map.of("error", "Unexpected error", "message", ex.getMessage()));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request
+    ) {
+        List<String> errors = ex.getBindingResult().getAllErrors().stream()
+                .map(this::getErrorMessage)
+                .toList();
+
+        return ResponseEntity
+                .badRequest()
+                .body(Map.of("errors", errors));
+    }
+
+    private String getErrorMessage(ObjectError e) {
+        if (e instanceof FieldError fieldError) {
+            return fieldError.getField() + " " + fieldError.getDefaultMessage();
+        }
+        return e.getDefaultMessage();
     }
 }

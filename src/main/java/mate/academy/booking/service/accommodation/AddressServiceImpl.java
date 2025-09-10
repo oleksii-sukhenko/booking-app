@@ -1,9 +1,9 @@
 package mate.academy.booking.service.accommodation;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import mate.academy.booking.dto.accommodation.AddressResponseDto;
 import mate.academy.booking.dto.accommodation.CreateAddressRequestDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.mapper.AddressMapper;
 import mate.academy.booking.model.Address;
 import mate.academy.booking.repository.accommodation.AddressRepository;

@@ -2,7 +2,6 @@ package mate.academy.booking.service.payment;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,6 +11,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mate.academy.booking.dto.payment.PaymentResponseDto;
+import mate.academy.booking.exception.EntityNotFoundException;
 import mate.academy.booking.mapper.PaymentMapper;
 import mate.academy.booking.model.Booking;
 import mate.academy.booking.model.Payment;
